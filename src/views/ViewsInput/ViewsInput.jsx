@@ -9,15 +9,17 @@ const ViewsInput = ({
                         onChange
                     }) => {
 
-        const IntegerValidation = (e) => {
-            const {name, value} = e.target;
+        const handleValidation = (e) => {
+            const { name, value } = e.target;
+
             if (name === "age") {
-                if (/^\d*$/.test(value) && (value === "" || (parseInt(value) >= 0 && parseInt(value) <= 99))) {
+                if (/^\d*$/.test(value) && (value === "" || (value.length === 1 || value[0] !== "0") && (parseInt(value) > 0 && parseInt(value) <= 99))) {
                     onChange(e);
                 } else if (value === "") {
                     onChange(e);
                 }
-            } else {
+            }
+            else if ((name === "name" || name === "email") && value.length <= 50) {
                 onChange(e);
             }
         };
@@ -29,8 +31,8 @@ const ViewsInput = ({
                 className={className}
                 placeholder={placeholder}
                 value={value}
-                onChange={IntegerValidation}
-                min="0"
+                onChange={handleValidation}
+                min="1"
                 max="99"
                 step="1"
             />

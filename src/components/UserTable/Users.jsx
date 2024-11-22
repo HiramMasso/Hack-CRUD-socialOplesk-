@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import UserTable from "../../views/UserTable/UserTable";
 import ViewsButton from "../../views/ViewsButton/ViewsButton";
+import "./Users.css";
 
-const Users = ({users, searchResults, deleteUser, TotalUsers}) => {
+const Users = ({ users, searchResults, deleteUser, TotalUsers }) => {
     const displayedUsers = searchResults.length > 0 ? searchResults : users;
+    const [expandedRowIndex, setExpandedRowIndex] = useState(null);
+
+    const handleNameToggle = (index) => {
+        setExpandedRowIndex(prevIndex => (prevIndex === index ? null : index));
+    };
+
+    const isNameExpanded = expandedRowIndex !== null;
+
     return (
         <div>
             <h2 className="tittle">List of elements</h2>
             <div className="totalUsers">
                 Total of Users: {TotalUsers}
             </div>
-            <div className="box">
-                <UserTable users={displayedUsers} deleteUser={deleteUser}/>
+            <div className={`box ${isNameExpanded ? "expand" : ""}`}>
+                <UserTable
+                    users={displayedUsers}
+                    deleteUser={deleteUser}
+                    expandedRowIndex={expandedRowIndex}
+                    handleNameToggle={handleNameToggle}
+                />
             </div>
             <div className="fixed-buttons">
                 <ViewsButton

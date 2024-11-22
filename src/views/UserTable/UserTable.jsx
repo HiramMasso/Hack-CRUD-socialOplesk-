@@ -11,7 +11,9 @@ const UserTable = ({
                        handleEditClick,
                        handleSaveClick,
                        handleChange,
-                       editedUser
+                       editedUser,
+                       expandedRowIndex,
+                       handleNameToggle
                    }) => {
     const location = useLocation();
     const [emailError, setEmailError] = useState(false);
@@ -34,6 +36,8 @@ const UserTable = ({
                         user={user}
                         index={index}
                         deleteUser={deleteUser}
+                        expandedRowIndex={expandedRowIndex}
+                        handleNameToggle={handleNameToggle}
                     />
                 ) : (
                     <EditableUserRow
